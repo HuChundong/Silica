@@ -33,7 +33,7 @@ class DebianPackager(object):
         release_file += "Suite: stable\n"
         release_file += "Version: 1.0\n"
         release_file += "Codename: ios\n"
-        release_file += "Architectures: iphoneos-arm64\n"
+        release_file += "Architectures: iphoneos-arm iphoneos-arm64\n"
         release_file += "Components: main\n"
         release_file += "Description: " + repo_settings['description'].replace("\n\n", "\n .\n ").replace("\n", "\n ") + "\n"
 
@@ -334,6 +334,7 @@ class DebianPackager(object):
                     # essential elements; it's also kinda a reference to me.
                     output = {
                         "bundle_id": "co.shuga.silica.unknown",
+                        "Architecture": "iphoneos-arm",
                         "name": "Unknown Package",
                         "version": "1.0.0",
                         "tagline": "An unknown package.",
@@ -358,6 +359,10 @@ class DebianPackager(object):
                         deb = Dpkg(deb_path)
                         output['name'] = deb.headers['Name']
                         output['bundle_id'] = deb.headers['Package']
+                        try:
+                            output['Architecture'] = deb.headers['Architecture']
+                        except Exception:
+                            output['Architecture'] = input("What is the Architecture(iphoneos-arm) of the package? ")
                         try:
                             output['tagline'] = deb.headers['Description']
                         except Exception:
