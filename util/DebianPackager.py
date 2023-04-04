@@ -367,14 +367,14 @@ class DebianPackager(object):
                         "name": "Unknown Package",
                         "version": "1.0.0",
                         "tagline": "An unknown package.",
-                        "homepage": "https://shuga.co/",
+                        "homepage": "https://repo.huchundong.com/",
                         "developer": {
                             "name": "Unknown",
                             "email": "idk@example.com"
                         },
                         "maintainer": {
-                            "name": "Unknown",
-                            "email": "idk@example.com"
+                            "name": "Huchundong",
+                            "email": "gycm520@gmail.com"
                         },
                         "section": "Themes",
 
@@ -418,8 +418,15 @@ class DebianPackager(object):
                         except Exception:
                             output['maintainer']['name'] = input("Who maintains this package now?"
                                                                  " This is likely your name. ")
+                        if output['maintainer']['name'] == "":
+                            output['maintainer']['name'] = "Huchundong"
+
                         output['maintainer']['email'] = input(
                             "What is the maintainer's email address? ")
+                        
+                        if output['maintainer']['email'] == "":
+                            output['maintainer']['email'] = "gycm520@gmail.com"
+                        
                         try:
                             output['sponsor']['name'] = remove_email_regex.sub(
                                 "", deb.headers['Sponsor'])
